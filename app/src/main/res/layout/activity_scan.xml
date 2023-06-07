@@ -1,12 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <SurfaceView
-        android:id="@+id/cameraSurfaceView"
+    <com.budiyev.android.codescanner.CodeScannerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/scanner_view"
+        app:autoFocusButtonColor="@android:color/white"
+        app:autoFocusButtonVisible="true"
+        app:flashButtonColor="@android:color/white"
+        app:flashButtonVisible="true"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_detail"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/scanner_view">
+
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/text_jenis_sampah"
+            android:paddingTop="5dp"
+            android:layout_width="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="15dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_jenis_sampah"/>
+
+        <TextView
+            android:id="@+id/text_nama_sampah"
+            android:layout_width="100dp"
+            android:layout_marginLeft="20dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_jenis_sampah"
+            android:text="@string/tv_nama_sampah"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_detail_sampah"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:drawableRight="@drawable/baseline_arrow_forward_24"
+            android:gravity="center"
+            app:backgroundTint="@color/green"
+            android:layout_marginRight="20dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.budiyev.android.codescanner.CodeScannerView>
+
+
+
+
+
 
 
 </RelativeLayout>
