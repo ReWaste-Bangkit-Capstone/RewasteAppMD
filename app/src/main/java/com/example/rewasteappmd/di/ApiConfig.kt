@@ -47,12 +47,14 @@ object ApiConfig {
         @ApplicationContext ctx: Context,
         collector: ChuckerCollector
     ): ChuckerInterceptor {
-        return ChuckerInterceptor(
-            context = ctx,
-            collector = collector,
-            maxContentLength = 250000L,
-            alwaysReadResponseBody = true
-        )
+        return ChuckerInterceptor.Builder(context = ctx)
+            .collector(collector = collector)
+            .maxContentLength(length = 250000L)
+            .redactHeaders(emptySet())
+            .alwaysReadResponseBody(
+                enable = true
+            )
+            .build()
     }
 
     @Provides

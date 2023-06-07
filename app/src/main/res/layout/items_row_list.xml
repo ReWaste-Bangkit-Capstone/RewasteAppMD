@@ -5,11 +5,10 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginStart="@dimen/root_padding"
+    android:layout_marginEnd="@dimen/root_padding"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     card_view:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,9 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:text="TextView"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/black"
+            android:maxLines="2"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/img_item_photo"
             card_view:layout_constraintTop_toTopOf="@+id/img_item_photo"
@@ -48,15 +48,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
-            android:maxLines="5"
-            android:text="TextView"
+            android:maxLines="4"
             card_view:layout_constraintBottom_toBottomOf="@+id/img_item_photo"
             card_view:layout_constraintEnd_toEndOf="@+id/tv_album_name"
             card_view:layout_constraintStart_toStartOf="@+id/tv_album_name"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_album_name"
             card_view:layout_constraintVertical_bias="0.0"
-            tools:text="@string/tv_detail_kerajinan"
-            />
+            tools:text="@string/tv_detail_kerajinan" />
 
 
 
