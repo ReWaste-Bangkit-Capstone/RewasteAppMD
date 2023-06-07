@@ -1,7 +1,8 @@
-package com.example.rewasteappmd
+package com.example.rewasteappmd.pages
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.rewasteappmd.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
