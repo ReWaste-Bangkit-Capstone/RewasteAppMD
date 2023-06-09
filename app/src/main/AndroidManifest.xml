@@ -7,8 +7,10 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ReWasteApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -19,7 +21,13 @@
         android:theme="@style/Theme.RewasteAppMD"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".pages.detail.DetailActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".pages.recommendation.DetailListActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".pages.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
