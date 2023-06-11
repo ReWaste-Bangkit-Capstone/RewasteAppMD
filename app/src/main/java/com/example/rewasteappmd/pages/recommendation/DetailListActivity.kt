@@ -27,8 +27,8 @@ class DetailListActivity: BaseActivity<ActivityDetailListBinding>() {
         setupAppBar()
 
         handicraftsAdapter = BaseAdapter(ItemsRowListBinding::inflate) { handicraft, layout ->
-            layout.tvAlbumName.text = handicraft.name
-            layout.tvAlbumRelease.text = handicraft.description
+            layout.tvKerajinanListName.text = handicraft.name
+            layout.tvKerajinanDesc.text = handicraft.description
 
             Glide.with(this).load(handicraft.thumbnail).into(layout.imgItemPhoto)
         }
