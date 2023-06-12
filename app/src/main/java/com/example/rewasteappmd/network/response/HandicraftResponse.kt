@@ -1,6 +1,7 @@
 package com.example.rewasteappmd.network.response
 
 import com.example.rewasteappmd.model.Handicraft
+import com.example.rewasteappmd.model.HandicraftDetail
 
 data class HandicraftResponse(
 
@@ -20,6 +21,17 @@ data class HandicraftResponse(
 
     fun toModel(): Handicraft {
         return Handicraft(
+            id = id,
+            name = name,
+            description = description,
+            thumbnail = photo_url,
+            steps = steps,
+            tags = tags,
+        )
+    }
+
+    fun toModel(): HandicraftDetail {
+        return HandicraftDetail(
             id = id,
             name = name,
             description = description,

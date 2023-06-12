@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import com.example.rewasteappmd.R
 import com.example.rewasteappmd.databinding.ActivityMainBinding
 import com.example.rewasteappmd.pages.recommendation.DetailListActivity
+import com.example.rewasteappmd.pages.scanner.ScanActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -16,7 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun setupViewInstance(savedInstanceState: Bundle?) {
         binding.camera.setOnClickListener {
-            startActivity(Intent(this@MainActivity, DetailListActivity::class.java))
+            startActivity(Intent(this@MainActivity, ScanActivity::class.java))
         }
     }
 

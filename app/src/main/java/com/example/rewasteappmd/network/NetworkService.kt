@@ -16,4 +16,12 @@ interface NetworkService {
         @Path("id") id: String
     ): Response<BaseResponse<HandicraftResponse>>
 
+    @GET("/api/v1/handicrafts/{id}")
+    suspend fun getHandicraftDetail(
+        @Path("id") id: String
+    ): Response<BaseResponse<HandicraftResponse>>
+
+
+
+
 }
