@@ -14,24 +14,26 @@ import com.example.rewasteappmd.pages.BaseActivity
 class DetailActivity: BaseActivity<ActivityDetailKerajinanBinding>() {
 
     private val viewModel: DetailActivityViewModel by viewModels()
-    private lateinit var handicraftsDetailAdapter: BaseAdapter<ActivityDetailKerajinanBinding, HandicraftDetail>
+
     override fun setupViewBinding(): (LayoutInflater) -> ActivityDetailKerajinanBinding {
         return ActivityDetailKerajinanBinding::inflate
     }
 
     override fun setupViewInstance(savedInstanceState: Bundle?) {
-        handicraftsDetailAdapter = BaseAdapter(ActivityDetailKerajinanBinding::inflate) { handicraftDetail, layout ->
-            layout.tvDetailKerajinan.text = handicraftDetail.name
-            layout.tvDeskripsiKerajinan.text = handicraftDetail.description
-            layout.tvLangkahKerajinan.text = handicraftDetail.steps.toString()
-            Glide.with(this).load(handicraftDetail.thumbnail).into(layout.imgItemKerajinan)
+        val handicraftId = intent.getStringExtra(EXTRA_ID) ?: ""
 
-        }
-        viewModel.getHandicraftDetail()
+        viewModel.getHandicraftDetail(handicraftId)
         viewModel.handicraftDetail.observe(this) { handicraftsDetail ->
-            if (handicraftsDetail.isNotEmpty()) {
-                handicraftsDetailAdapter.setData(handicraftsDetail)
+            if (handicraftsDetail.id.isNotEmpty()) {
+                binding.tvDetailKerajinan.text = handicraftsDetail.name
+                Glide.with(this).load(handicraftsDetail.thumbnail).into(binding.imgItemKerajinan)
+                binding.tvLangkahKerajinan.text = handicraftsDetail.steps.toString()
+                binding.tvDeskripsiKerajinan.text = handicraftsDetail.description
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_id"
     }
 }

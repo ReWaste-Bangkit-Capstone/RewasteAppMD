@@ -7,8 +7,6 @@ interface Repository {
 
     suspend fun getHandicrafts(): List<Handicraft>
 
-    suspend fun getHandicraft(id: String): Handicraft?
-
-    suspend fun getHandicraftDetail(id: String): HandicraftDetail?
+    suspend fun getHandicraftDetail(id: String): HandicraftDetail
 
 }

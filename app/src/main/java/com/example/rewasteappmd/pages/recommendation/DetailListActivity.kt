@@ -1,5 +1,6 @@
 package com.example.rewasteappmd.pages.recommendation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import com.example.rewasteappmd.databinding.ActivityDetailListBinding
 import com.example.rewasteappmd.databinding.ItemsRowListBinding
 import com.example.rewasteappmd.model.Handicraft
 import com.example.rewasteappmd.pages.BaseActivity
+import com.example.rewasteappmd.pages.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +33,13 @@ class DetailListActivity: BaseActivity<ActivityDetailListBinding>() {
             layout.tvKerajinanDesc.text = handicraft.description
 
             Glide.with(this).load(handicraft.thumbnail).into(layout.imgItemPhoto)
+
+            layout.root.setOnClickListener {
+                val toDetail = Intent(this, DetailActivity::class.java).apply {
+                    putExtra(DetailActivity.EXTRA_ID, handicraft.id)
+                }
+                startActivity(toDetail)
+            }
         }
         binding.rvDetailKerajinan.layoutManager = LinearLayoutManager(this)
         binding.rvDetailKerajinan.adapter = handicraftsAdapter
@@ -58,4 +67,9 @@ class DetailListActivity: BaseActivity<ActivityDetailListBinding>() {
             else -> false
         }
     }
+
+    companion object {
+        const val EXTRA_LABEL = "extra_label"
+    }
+
 }

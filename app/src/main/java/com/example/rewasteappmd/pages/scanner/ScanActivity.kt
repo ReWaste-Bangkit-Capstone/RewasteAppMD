@@ -1,18 +1,24 @@
 package com.example.rewasteappmd.pages.scanner
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import com.example.rewasteappmd.R
-import com.example.rewasteappmd.databinding.ActivityDetailKerajinanBinding
+import androidx.activity.viewModels
 import com.example.rewasteappmd.databinding.ActivityScanBinding
-import com.example.rewasteappmd.ml.Model
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.rewasteappmd.ml.GarbageXception
+import com.example.rewasteappmd.model.MachineLearningModel
+import com.example.rewasteappmd.pages.BaseActivity
+import com.example.rewasteappmd.pages.recommendation.DetailListActivity
+import dagger.hilt.android.AndroidEntryPoint
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
@@ -20,47 +26,91 @@ import java.nio.ByteOrder
 import kotlin.math.min
 
 
-class ScanActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityScanBinding
-    private lateinit var takeItemPhoto: FloatingActionButton
-    private lateinit var imgItemPhoto: ImageView
-    private lateinit var label: TextView
+@AndroidEntryPoint
+class ScanActivity : BaseActivity<ActivityScanBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityScanBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+    private val viewModel: ScanActivityViewModel by viewModels()
 
-        label = findViewById(R.id.tv_jenis_sampah)
-        takeItemPhoto = findViewById(R.id.btn_photo)
-        imgItemPhoto = findViewById(R.id.img_item_scan)
+    override fun setupViewBinding(): (LayoutInflater) -> ActivityScanBinding {
+        return ActivityScanBinding::inflate
+    }
+
+    override fun setupViewInstance(savedInstanceState: Bundle?) {
+        setupAppBar()
+
+        viewModel.detectionLabel.postValue(null)
 
         val onCameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 var image: Bitmap = result.data?.extras?.get("data") as Bitmap
                 val dimension = min(image.width, image.height)
                 image = ThumbnailUtils.extractThumbnail(image, dimension, dimension)
-                imgItemPhoto.setImageBitmap(image)
+                binding.preview.setImageBitmap(image)
 
                 image = Bitmap.createScaledBitmap(image, IMAGE_SIZE, IMAGE_SIZE, false)
-                //classifyImage(image)
+                classifyImage(image)
             }
 
         }
 
+        openCamera(onCameraResult)
+
+        binding.retake.setOnClickListener {
+            viewModel.detectionLabel.postValue(null)
+            openCamera(onCameraResult)
+        }
+
+        viewModel.detectionLabel.observe(this) { label ->
+            if (!label.isNullOrEmpty()) {
+                binding.search.setOnClickListener {
+                    val toRecommendation = Intent(this, DetailListActivity::class.java).apply {
+                        putExtra(DetailListActivity.EXTRA_LABEL, label)
+                    }
+                    startActivity(toRecommendation)
+                }
+            }
+        }
+    }
+
+    private fun setupAppBar() {
+        binding.toolbar.title = "Predicted Result"
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun openCamera(onCameraResult: ActivityResultLauncher<Intent>) {
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            onCameraResult.launch(cameraIntent)
+        } else {
+            // Request camera permission
+            requestPermissions(arrayOf(Manifest.permission.CAMERA), 100)
+        }
     }
 
     private fun classifyImage(image: Bitmap?) {
-        val model = Model.newInstance(this)
+        val model = GarbageXception.newInstance(this)
 
-        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+        // Creates inputs for reference.
+        val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, IMAGE_SIZE, IMAGE_SIZE, 3), DataType.FLOAT32)
         val byteBuffer = ByteBuffer.allocateDirect(4 * IMAGE_SIZE * IMAGE_SIZE * 3)
         byteBuffer.order(ByteOrder.nativeOrder())
 
+        // get 1D array of 224 * 224 pixels in image
         val intValues = IntArray(IMAGE_SIZE * IMAGE_SIZE)
         image!!.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
 
+        // iterate over pixels and extract R, G, and B values. Add to bytebuffer.
         var pixel = 0
         for (i in 0 until IMAGE_SIZE) {
             for (j in 0 until IMAGE_SIZE) {
@@ -73,30 +123,32 @@ class ScanActivity : AppCompatActivity() {
 
         inputFeature0.loadBuffer(byteBuffer)
 
+        // Runs model inference and gets result.
         val outputs = model.process(inputFeature0)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
         val confidences = outputFeature0.floatArray
 
-        var maxPos = 0
-        var maxConfidence = 0f
-        for (i in confidences.indices) {
-            if (confidences[i] > maxConfidence) {
-                maxConfidence = confidences[i]
-                maxPos = i
-            }
+        // find the index of the class with the biggest confidence.
+        val maxPos = confidences.indices.maxByOrNull { confidences[it] } ?: 0
+
+        val classes = MachineLearningModel.getClasses()
+
+        try {
+            val predicted = classes[maxPos]
+            binding.search.text = predicted
+            viewModel.detectionLabel.postValue(predicted)
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            Log.d("ScanActivity", "arrayIndexOutOfBound: ${e.message}")
+            viewModel.detectionLabel.postValue(null)
         }
 
-        val classes = arrayOf("Banana", "Orange", "Pen", "Sticky Notes")
-        label.text = classes[maxPos]
-
-
-    model.close()
+        model.close()
 
     }
 
     companion object {
-        const val IMAGE_SIZE = 224;
+        const val IMAGE_SIZE = 256
     }
 
 }

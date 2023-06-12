@@ -1,6 +1,7 @@
 package com.example.rewasteappmd.network
 
 import com.example.rewasteappmd.network.response.BaseResponse
+import com.example.rewasteappmd.network.response.HandicraftDetailResponse
 import com.example.rewasteappmd.network.response.HandicraftResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,14 +13,9 @@ interface NetworkService {
     suspend fun getHandicrafts(): Response<BaseResponse<List<HandicraftResponse>>>
 
     @GET("/api/v1/handicrafts/{id}")
-    suspend fun getHandicraft(
-        @Path("id") id: String
-    ): Response<BaseResponse<HandicraftResponse>>
-
-    @GET("/api/v1/handicrafts/{id}")
     suspend fun getHandicraftDetail(
         @Path("id") id: String
-    ): Response<BaseResponse<HandicraftResponse>>
+    ): Response<BaseResponse<HandicraftDetailResponse>>
 
 
 

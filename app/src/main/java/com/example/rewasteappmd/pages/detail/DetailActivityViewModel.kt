@@ -15,11 +15,11 @@ class DetailActivityViewModel @Inject constructor(
     private val repository: Repository
 ): ViewModel() {
 
-    val handicraftDetail: MutableLiveData<List<HandicraftDetail>> = MutableLiveData()
+    val handicraftDetail: MutableLiveData<HandicraftDetail> = MutableLiveData()
 
-    fun getHandicraftDetail() {
+    fun getHandicraftDetail(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val handicraftDetailResponse = repository.getHandicraftsDetail()
+            val handicraftDetailResponse = repository.getHandicraftDetail(id)
             handicraftDetail.postValue(handicraftDetailResponse)
         }
 

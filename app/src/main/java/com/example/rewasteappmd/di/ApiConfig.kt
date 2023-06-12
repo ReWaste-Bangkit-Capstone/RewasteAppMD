@@ -60,8 +60,7 @@ object ApiConfig {
     @Provides
     @Singleton
     fun providesHttpClient(
-        chuckerInterceptor: ChuckerInterceptor,
-        @ApplicationContext ctx: Context
+        chuckerInterceptor: ChuckerInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .callTimeout(15, TimeUnit.SECONDS)

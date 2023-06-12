@@ -30,15 +30,4 @@ data class HandicraftResponse(
         )
     }
 
-    fun toModel(): HandicraftDetail {
-        return HandicraftDetail(
-            id = id,
-            name = name,
-            description = description,
-            thumbnail = photo_url,
-            steps = steps,
-            tags = tags,
-        )
-    }
-
 }
