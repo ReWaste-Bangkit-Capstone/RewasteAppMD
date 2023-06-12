@@ -6,16 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".pages.MainActivity">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/camera"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Picture Garbage"
-        app:icon="@drawable/baseline_camera_alt_24"
+        android:text="Transforming Waste into a Sustainable Future"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:layout_marginTop="55dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageView
+        android:id="@+id/illustration"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/recycle_illustration"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:foregroundTint="@color/background"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/description"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We are here to inspire and facilitate you in the process of effective recycling, helping to create a greener and sustainable world."
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintTop_toBottomOf="@id/illustration"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/camera"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/camera"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Let's Get Started"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="30dp"
+        android:layout_marginStart="16dp"
+        app:layout_goneMarginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
