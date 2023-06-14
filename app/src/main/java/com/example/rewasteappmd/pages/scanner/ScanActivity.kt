@@ -61,7 +61,9 @@ class ScanActivity : BaseActivity<ActivityScanBinding>() {
         }
 
         viewModel.detectionLabel.observe(this) { label ->
+            Log.d("ScanActivity", "label: $label")
             if (!label.isNullOrEmpty()) {
+                Log.d("ScanActivity", "label: $label")
                 binding.search.setOnClickListener {
                     val toRecommendation = Intent(this, DetailListActivity::class.java).apply {
                         putExtra(DetailListActivity.EXTRA_LABEL, label)
