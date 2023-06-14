@@ -137,7 +137,7 @@ class ScanActivity : BaseActivity<ActivityScanBinding>() {
         val classes = MachineLearningModel.getClasses()
 
         try {
-            val predicted = classes[maxPos]
+            val predicted = classes[maxPos].lowercase()
             binding.search.text = predicted
             viewModel.detectionLabel.postValue(predicted)
         } catch (e: ArrayIndexOutOfBoundsException) {
