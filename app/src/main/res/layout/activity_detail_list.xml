@@ -18,6 +18,8 @@
         android:id="@+id/rv_detail_kerajinan"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        tools:listitem="@layout/items_row_list"
+        tools:itemCount="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

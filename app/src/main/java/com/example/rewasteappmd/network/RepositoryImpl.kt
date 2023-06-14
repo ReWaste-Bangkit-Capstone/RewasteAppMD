@@ -10,9 +10,9 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val networkService: NetworkService): Repository {
 
-    override suspend fun getHandicrafts(): List<Handicraft> {
+    override suspend fun getHandicrafts(tag: String): List<Handicraft> {
         return withContext(Dispatchers.IO) {
-            val call = networkService.getHandicrafts()
+            val call = networkService.getHandicrafts(tag)
             if (!call.isSuccessful) {
                 Log.d("RepositoryImpl", "getMenu: ${call.errorBody()}")
             }

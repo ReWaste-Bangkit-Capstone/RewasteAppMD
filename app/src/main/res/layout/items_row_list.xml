@@ -13,14 +13,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
-
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/img_item_photo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -37,10 +35,26 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:maxLines="2"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/img_item_photo"
             card_view:layout_constraintTop_toTopOf="@+id/img_item_photo"
             tools:text="@string/tv_nama_detail_kerajinan"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tag_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            tools:listitem="@layout/item_tag"
+            tools:itemCount="2"
+            card_view:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            card_view:layout_constraintTop_toBottomOf="@id/tv_kerajinan_list_name"
+            card_view:layout_constraintLeft_toLeftOf="@id/tv_kerajinan_list_name"
+            card_view:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/tv_kerajinan_desc"
@@ -49,11 +63,12 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="4"
-            card_view:layout_constraintBottom_toBottomOf="@+id/img_item_photo"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_kerajinan_list_name"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_kerajinan_list_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_kerajinan_list_name"
-            card_view:layout_constraintVertical_bias="0.0"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            card_view:layout_constraintTop_toBottomOf="@id/tag_rv"
+            card_view:layout_constraintLeft_toLeftOf="@id/tag_rv"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="parent"
             tools:text="@string/tv_detail_kerajinan" />
 
 

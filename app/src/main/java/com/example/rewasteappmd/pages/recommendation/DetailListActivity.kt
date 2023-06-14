@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.LinearLayout
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.rewasteappmd.adapter.BaseAdapter
 import com.example.rewasteappmd.databinding.ActivityDetailListBinding
+import com.example.rewasteappmd.databinding.ItemTagBinding
 import com.example.rewasteappmd.databinding.ItemsRowListBinding
 import com.example.rewasteappmd.model.Handicraft
 import com.example.rewasteappmd.pages.BaseActivity
@@ -34,6 +36,13 @@ class DetailListActivity: BaseActivity<ActivityDetailListBinding>() {
 
             Glide.with(this).load(handicraft.thumbnail).into(layout.imgItemPhoto)
 
+            val tagAdapter: BaseAdapter<ItemTagBinding, String> = BaseAdapter(ItemTagBinding::inflate) { tag, layoutTag ->
+                layoutTag.tag.text = tag
+            }
+            layout.tagRv.adapter = tagAdapter
+
+            tagAdapter.setData(handicraft.tags)
+
             layout.root.setOnClickListener {
                 val toDetail = Intent(this, DetailActivity::class.java).apply {
                     putExtra(DetailActivity.EXTRA_ID, handicraft.id)
@@ -44,7 +53,8 @@ class DetailListActivity: BaseActivity<ActivityDetailListBinding>() {
         binding.rvDetailKerajinan.layoutManager = LinearLayoutManager(this)
         binding.rvDetailKerajinan.adapter = handicraftsAdapter
 
-        viewModel.getHandicrafts()
+        val tag = intent.getStringExtra(EXTRA_LABEL) ?: ""
+        viewModel.getHandicrafts(tag)
         viewModel.handicrafts.observe(this) { handicrafts ->
             if (handicrafts.isNotEmpty()) {
                 handicraftsAdapter.setData(handicrafts)

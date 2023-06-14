@@ -17,9 +17,9 @@ class DetailListActivityViewModel @Inject constructor(
 
     val handicrafts: MutableLiveData<List<Handicraft>> = MutableLiveData()
 
-    fun getHandicrafts() {
+    fun getHandicrafts(tag: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val handicraftsResponse = repository.getHandicrafts()
+            val handicraftsResponse = repository.getHandicrafts(tag)
             handicrafts.postValue(handicraftsResponse)
         }
     }
