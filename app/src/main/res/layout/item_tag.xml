@@ -13,6 +13,7 @@
         android:paddingStart="14dp"
         android:paddingEnd="14dp"
         android:textSize="10sp"
-        android:background="@color/background" />
+        android:background="@color/design_default_color_primary"
+        android:textColor="@color/design_default_color_on_primary"/>
 
 </androidx.cardview.widget.CardView>
