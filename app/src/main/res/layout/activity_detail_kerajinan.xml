@@ -4,12 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".pages.detail.DetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
             android:id="@+id/tv_detail_kerajinan"
@@ -18,8 +25,9 @@
             android:layout_marginTop="30dp"
             android:text="@string/tv_nama_detail_kerajinan"
             android:textSize="25dp"
+            android:layout_marginLeft="@dimen/root_padding"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
         <ImageView
             android:id="@+id/img_item_kerajinan"
@@ -27,32 +35,41 @@
             android:layout_height="200dp"
             android:layout_marginTop="15dp"
             android:src="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="@dimen/root_padding"
+            android:layout_marginRight="@dimen/root_padding"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_kerajinan"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tv_deskripsi_kerajinan"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill_vertical"
             android:text="@string/tv_deskripsi_kerajinan"
             android:layout_marginTop="15dp"
             android:textSize="15dp"
+            android:layout_marginLeft="@dimen/root_padding"
+            android:layout_marginRight="@dimen/root_padding"
             app:layout_constraintTop_toBottomOf="@+id/img_item_kerajinan"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             />
 
         <TextView
             android:id="@+id/tv_langkah_kerajinan"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="fill_vertical"
             android:text="@string/tv_langkah_kerajinan"
             android:layout_marginTop="15dp"
             android:textSize="15dp"
+            android:layout_marginLeft="@dimen/root_padding"
+            android:layout_marginRight="@dimen/root_padding"
             app:layout_constraintTop_toBottomOf="@+id/tv_deskripsi_kerajinan"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

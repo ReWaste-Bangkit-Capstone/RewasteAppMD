@@ -22,6 +22,8 @@ class DetailActivity: BaseActivity<ActivityDetailKerajinanBinding>() {
     }
 
     override fun setupViewInstance(savedInstanceState: Bundle?) {
+        setupAppBar()
+
         val handicraftId = intent.getStringExtra(EXTRA_ID) ?: ""
 
         viewModel.getHandicraftDetail(handicraftId)
@@ -33,6 +35,13 @@ class DetailActivity: BaseActivity<ActivityDetailKerajinanBinding>() {
                 binding.tvDeskripsiKerajinan.text = handicraftsDetail.description
             }
         }
+    }
+
+
+    private fun setupAppBar() {
+        binding.toolbar.title = "Item Detail"
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     companion object {
