@@ -44,6 +44,16 @@ class DetailActivity: BaseActivity<ActivityDetailKerajinanBinding>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> false
+        }
+    }
+
     companion object {
         const val EXTRA_ID = "extra_id"
     }
