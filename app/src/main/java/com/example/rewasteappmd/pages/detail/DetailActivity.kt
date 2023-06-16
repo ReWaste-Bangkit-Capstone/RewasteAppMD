@@ -10,7 +10,9 @@ import com.example.rewasteappmd.adapter.BaseAdapter
 import com.example.rewasteappmd.databinding.ActivityDetailKerajinanBinding
 import com.example.rewasteappmd.model.HandicraftDetail
 import com.example.rewasteappmd.pages.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailActivity: BaseActivity<ActivityDetailKerajinanBinding>() {
 
     private val viewModel: DetailActivityViewModel by viewModels()
